@@ -1,25 +1,21 @@
-import React from 'react';
+// In your navigation setup
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import AttendanceScreen from './Screens/AttendanceScreen';
 import VerifyDeviceScreen from './Screens/VerifyDevice';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-const App = () => {
+const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="AttendanceScreen">
-      <Stack.Screen name="AttendanceScreen" component={AttendanceScreen} />
-      <Stack.Screen name="VerifyDevice" component={VerifyDeviceScreen} />
-
-      
-        
-        {/* Add more screens here if needed */}
+        <Stack.Screen name="AttendanceScreen" component={AttendanceScreen} />
+        {/* <Stack.Screen name="VerifyDevice" component={VerifyDeviceScreen} /> */}
+        {/* Add other screens as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
+export default AppNavigator;

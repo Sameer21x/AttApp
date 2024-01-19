@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, RadioButton } from 'react-native';
 
 const VerifyDeviceScreen = () => {
-  const [emails, setEmails] = useState([]); // Array to store fetched emails
+  const [emails, setEmails] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
 
   useEffect(() => {
@@ -13,14 +13,16 @@ const VerifyDeviceScreen = () => {
 
   const fetchEmails = async () => {
     try {
-      const macAddress = 'B4-69-21-76-35-68'; // Replace with the actual MAC address
+      const macAddress = 'B4-69-21-76-35-68';
       const response = await fetch(`https://attendance-app-sepia.vercel.app/api/v1/auth/user/emails?macAddress=${macAddress}`);
       const result = await response.json();
-      // Check if 'emails' is not undefined before setting state
-      if (result.emails !== undefined) {
-        setEmails(result.emails); // Assuming the API response contains an 'emails' array
+
+      console.log('API Response:', result);
+
+      if (result.body && result.body.length > 0) {
+        setEmails(result.body);
       } else {
-        console.error('Error: Emails array is undefined in API response');
+        console.error('Error: Emails array is undefined or empty in API response');
       }
     } catch (error) {
       console.error('Error fetching emails:', error);
@@ -31,13 +33,13 @@ const VerifyDeviceScreen = () => {
     <View>
       <Text>Select your email:</Text>
       <ScrollView>
-        {emails && emails.map((email) => (
-          <View key={email.id}>
-            <Text>{email.address}</Text>
+        {emails.map((email) => (
+          <View key={email._id}>
+            <Text>{email.email}</Text>
             <RadioButton
-              value={email.id}
-              status={selectedEmail === email.id ? 'checked' : 'unchecked'}
-              onPress={() => setSelectedEmail(email.id)}
+              value={email._id}
+              status={selectedEmail === email._id ? 'checked' : 'unchecked'}
+              onPress={() => setSelectedEmail(email._id)}
             />
           </View>
         ))}
